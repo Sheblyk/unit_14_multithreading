@@ -42,16 +42,16 @@ public class TaskRunner {
             t1.join();
             t2.join();
         } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
 
-        List<Integer> leftResult = new ArrayList<>();
-        List<Integer> rightResult = new ArrayList<>();
+        List<Integer> leftResult;
+        List<Integer> rightResult;
         try {
             leftResult = left.get();
             rightResult = right.get();
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         if (leftResult.size() != 0)
