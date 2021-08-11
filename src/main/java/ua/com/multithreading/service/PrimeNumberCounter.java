@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class PrimeNumberCounter implements Callable<Integer> {
+public class PrimeNumberCounter implements Callable<List<Integer>> {
 
     private List<Integer> numbers;
     private List<Integer> primeNumbers;
@@ -14,21 +14,14 @@ public class PrimeNumberCounter implements Callable<Integer> {
         primeNumbers = new ArrayList<>();
     }
 
-    public Integer call() throws Exception {
+    @Override
+    public List<Integer> call() {
         for (Integer number : numbers) {
-            if(checkIfPrime(number)){
+            if (checkIfPrime(number)) {
                 primeNumbers.add(number);
             }
         }
-        //printPrimeList();
-        return primeNumbers.size();
-    }
-
-    private void printPrimeList(){
-        for (Integer pn: primeNumbers) {
-            System.out.print(pn + " ");
-        }
-        System.out.println("\n");
+        return primeNumbers;
     }
 
     private boolean checkIfPrime(Integer number) {
