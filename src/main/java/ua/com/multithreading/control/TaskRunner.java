@@ -12,25 +12,25 @@ import java.util.concurrent.FutureTask;
 public class TaskRunner {
     private final static String LINE = "_________________";
 
-    public void start(){
-        System.out.println(LINE+ "First task" + LINE);
+    public void start() {
+        System.out.println(LINE + "First task" + LINE);
         taskFirst();
-        System.out.println(LINE+ "Second task" + LINE);
+        System.out.println(LINE + "Second task" + LINE);
         taskSecond();
     }
 
-    private void taskFirst(){
+    private void taskFirst() {
         HelloFromThread hello = new HelloFromThread();
         hello.helloMethod();
     }
 
-    private void taskSecond(){
+    private void taskSecond() {
 
         List<Integer> list = new ArrayList<>(Util.uniqueRandom(10, 100));
-        Util.printListAndMessage(list,"Generated list of unique numbers:" );
+        Util.printListAndMessage(list, "Generated list of unique numbers:");
 
-        FutureTask<List<Integer>> left = new FutureTask<>(new PrimeNumberCounter(list.subList(0, list.size()/2)));
-        FutureTask<List<Integer>> right = new FutureTask<>(new PrimeNumberCounter(list.subList(list.size()/2, list.size())));
+        FutureTask<List<Integer>> left = new FutureTask<>(new PrimeNumberCounter(list.subList(0, list.size() / 2)));
+        FutureTask<List<Integer>> right = new FutureTask<>(new PrimeNumberCounter(list.subList(list.size() / 2, list.size())));
 
         Thread t1 = new Thread(left);
         Thread t2 = new Thread(right);
@@ -38,10 +38,10 @@ public class TaskRunner {
         t1.start();
         t2.start();
 
-        try{
+        try {
             t1.join();
             t2.join();
-        } catch (InterruptedException e){
+        } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
 
@@ -54,9 +54,9 @@ public class TaskRunner {
             e.printStackTrace();
         }
 
-        if(leftResult.size() != 0)
+        if (leftResult.size() != 0)
             Util.printListAndMessage(leftResult, "Prime numbers from left part: ");
-        if(rightResult.size() != 0)
+        if (rightResult.size() != 0)
             Util.printListAndMessage(rightResult, "Prime numbers from right part: ");
 
         System.out.println("First thread result: " + leftResult.size() +
